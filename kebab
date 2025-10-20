@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rico Pizzería Kebab</title>
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff;
+    color: #3e1f0d;
+    line-height: 1.5;
+  }
+  header {
+    background-color: #d92f1a;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    user-select: none;
+  }
+  nav {
+    background-color: #b02a13;
+    display: flex;
+    justify-content: center;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  nav button:hover,
+  nav button.active {
+    background-color: #7f1a0a;
+  }
+  main {
+    max-width: 900px;
+    margin: 30px auto 50px auto;
+    padding: 0 20px;
+  }
+  section {
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  section.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  /* Inicio */
+  #inicio h2 {
+    color: #d92f1a;
+    margin-bottom: 15px;
+  }
+  #inicio p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+  }
+  #inicio .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  #inicio .gallery img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  #inicio .gallery img:hover {
+    transform: scale(1.05);
+  }
+  #horarios {
+    background: #d92f1a;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    width: fit-content;
+    margin: 0 auto 40px auto;
+    box-shadow: 0 4px 10px rgba(217,47,26,0.7);
+  }
+
+  /* Menú */
+  #menu h2 {
+    color: #d92f1a;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .menu-section {
+    margin-bottom: 35px;
+  }
+  .menu-section h3 {
+    border-bottom: 3px solid #d92f1a;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #7f1a0a;
+  }
+  .menu-item {
+    background: #fff0e6;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 8px rgba(217,47,26,0.15);
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .menu-item .name {
+    color: #b02a13;
+  }
+  /* Pedido */
+  #pedido h2 {
+    color: #d92f1a;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  #pedido form {
+    max-width: 450px;
+    margin: 0 auto;
+    background: #fff0e6;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(217,47,26,0.15);
+  }
+  #pedido label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+    color: #7f1a0a;
+  }
+  #pedido select,
+  #pedido input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1.5px solid #d92f1a;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3e1f0d;
+  }
+  #pedido button {
+    width: 100%;
+    background-color: #d92f1a;
+    color: white;
+    border: none;
+    padding: 12px 0;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  #pedido button:hover {
+    background-color: #7f1a0a;
+  }
+  #resumenPedido {
+    max-width: 450px;
+    margin: 25px auto 0 auto;
+    background: #d92f1a;
+    color: white;
+    border-radius: 12px;
+    padding: 15px 20px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: none;
+  }
+
+  /* Contacto */
+  #contacto h2 {
+    color: #d92f1a;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+  #contacto .info {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff0e6;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 3px 8px rgba(217,47,26,0.15);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #3e1f0d;
+  }
+  #contacto .info p {
+    margin-bottom: 12px;
+  }
+  #contacto button {
+    background-color: #d92f1a;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 25px auto 0 auto;
+    transition: background-color 0.3s ease;
+  }
+  #contacto button:hover {
+    background-color: #7f1a0a;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    nav {
+      flex-direction: column;
+      align-items: center;
+    }
+    nav button {
+      padding: 12px 15px;
+      width: 90%;
+      margin-bottom: 5px;
+    }
+    main {
+      margin: 20px 10px 40px 10px;
+      padding: 0 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>Rico Pizzería Kebab</header>
+
+<nav>
+  <button class="nav-btn active" data-section="inicio">Inicio</button>
+  <button class="nav-btn" data-section="menu">Menú</button>
+  <button class="nav-btn" data-section="pedido">Pedido</button>
+  <button class="nav-btn" data-section="contacto">Contacto</button>
+</nav>
+
+<main>
+  <!-- INICIO -->
+  <section id="inicio" class="active" aria-label="Sección de inicio" tabindex="-1">
+    <h2>Nuestra historia</h2>
+    <p>
+      En Rico Pizzería Kebab, nuestra pasión por la comida se remonta a generaciones. Inspirados por las recetas tradicionales que han pasado de familia en familia, hemos creado un lugar donde el sabor auténtico del kebab se combina con la frescura y calidad que nuestros clientes merecen.
+      Desde la cuidadosa selección de ingredientes hasta la preparación artesanal de cada plato, queremos que cada bocado sea una experiencia inolvidable.
+      Nuestro local en Palma no solo ofrece kebabs, sino también una variedad de platos complementarios, como deliciosas patatas fritas, pizzas recién horneadas y durums, pensados para satisfacer todos los gustos.
+      Ven y descubre cómo la tradición y la innovación se unen en cada plato que servimos.
+    </p>
+
+    
+
+    <div id="horarios" aria-live="polite">
+      Horarios de apertura: <strong>Lunes a domingo de 12:00 a 24:00</strong>
+    </div>
+  </section>
+
+  <!-- MENÚ -->
+  <section id="menu" aria-label="Menú de platos" tabindex="-1">
+    <h2>Menú</h2>
+
+    <div class="menu-section" aria-label="Kebabs">
+      <h3>Kebabs</h3>
+      <div class="menu-item"><span class="name">Kebab de Ternera</span> <span>7.50€</span></div>
+      <div class="menu-item"><span class="name">Kebab de Pollo</span> <span>7.00€</span></div>
+    </div>
+
+    <div class="menu-section" aria-label="Durums">
+      <h3>Durums</h3>
+      <div class="menu-item"><span class="name">Durum de Ternera</span> <span>6.50€</span></div>
+      <div class="menu-item"><span class="name">Durum de Pollo</span> <span>6.00€</span></div>
+    </div>
+
+    <div class="menu-section" aria-label="Pizzas">
+      <h3>Pizzas</h3>
+      <div class="menu-item"><span class="name">Margarita</span> <span>8.00€</span></div>
+      <div class="menu-item"><span class="name">Peperoni</span> <span>9.00€</span></div>
+      <div class="menu-item"><span class="name">Barbacoa</span> <span>9.50€</span></div>
+      <div class="menu-item"><span class="name">Vegetal</span> <span>8.50€</span></div>
+      <div class="menu-item"><span class="name">Cuatro Quesos</span> <span>9.00€</span></div>
+    </div>
+  </section>
+
+  <!-- PEDIDO -->
+  <section id="pedido" aria-label="Realizar pedido" tabindex="-1">
+    <h2>Realiza tu pedido</h2>
+    <form id="pedidoForm" novalidate>
+      <label for="producto">Producto:</label>
+      <select id="producto" required aria-required="true" name="producto">
+        <option value="" disabled selected>-- Selecciona un producto --</option>
+
+        <optgroup label="Kebabs">
+          <option value="Kebab de Ternera" data-price="7.5">Kebab de Ternera - 7.50€</option>
+          <option value="Kebab de Pollo" data-price="7.0">Kebab de Pollo - 7.00€</option>
+        </optgroup>
+
+        <optgroup label="Durums">
+          <option value="Durum de Ternera" data-price="6.5">Durum de Ternera - 6.50€</option>
+          <option value="Durum de Pollo" data-price="6.0">Durum de Pollo - 6.00€</option>
+        </optgroup>
+
+        <optgroup label="Pizzas">
+          <option value="Margarita" data-price="8.0">Margarita - 8.00€</option>
+          <option value="Peperoni" data-price="9.0">Peperoni - 9.00€</option>
+          <option value="Barbacoa" data-price="9.5">Barbacoa - 9.50€</option>
+          <option value="Vegetal" data-price="8.5">Vegetal - 8.50€</option>
+          <option value="Cuatro Quesos" data-price="9.0">Cuatro Quesos - 9.00€</option>
+        </optgroup>
+      </select>
+
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" name="cantidad" min="1" value="1" required aria-required="true" />
+
+      <label for="nombre">Nombre para el pedido:</label>
+      <input type="text" id="nombre" name="nombre" required aria-required="true" placeholder="Tu nombre" />
+
+      <button type="submit">Enviar Pedido</button>
+    </form>
+
+    <div id="resumenPedido" role="region" aria-live="polite"></div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" aria-label="Información de contacto" tabindex="-1">
+    <h2>Contacto</h2>
+    <div class="info">
+      <p><strong>Dirección:</strong> Calle Valparaíso, n7a, Palma</p>
+      <p><strong>Teléfono:</strong> 871054240</p>
+      <p><strong>Nombre del local:</strong> Rico Pizzería Kebab</p>
+    </div>
+    <button id="btnReseñas" aria-label="Abrir reseñas en Google Maps">Ver Reseñas</button>
+  </section>
+</main>
+
+<script>
+  // Navegación entre secciones
+  const navButtons = document.querySelectorAll('nav button.nav-btn');
+  const sections = document.querySelectorAll('main section');
+
+  navButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const target = button.getAttribute('data-section');
+
+      // Cambiar activo en botones
+      navButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      // Mostrar solo la sección seleccionada
+      sections.forEach(sec => {
+        if (sec.id === target) {
+          sec.classList.add('active');
+          sec.setAttribute('tabindex', '-1'); // para que se pueda enfocar
+          sec.focus();
+        } else {
+          sec.classList.remove('active');
+          sec.removeAttribute('tabindex');
+        }
+      });
+    });
+  });
+
+  // Formulario pedido
+  const pedidoForm = document.getElementById('pedidoForm');
+  const resumenPedido = document.getElementById('resumenPedido');
+
+  pedidoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const productoSelect = document.getElementById('producto');
+    const cantidadInput = document.getElementById('cantidad');
+    const nombreInput = document.getElementById('nombre');
+
+    const producto = productoSelect.value;
+    const precio = parseFloat(productoSelect.selectedOptions[0].getAttribute('data-price'));
+    const cantidad = parseInt(cantidadInput.value);
+    const nombre = nombreInput.value.trim();
+
+    if (!producto || cantidad < 1 || !nombre) {
+      alert('Por favor, completa todos los campos correctamente.');
+      return;
+    }
+
+    const total = (precio * cantidad).toFixed(2);
+
+    resumenPedido.style.display = 'block';
+    resumenPedido.innerHTML = `
+      <h3>Resumen de tu pedido</h3>
+      <p>Gracias, <strong>${nombre}</strong>, por tu pedido.</p>
+      <p>Producto: <strong>${producto}</strong></p>
+      <p>Cantidad: <strong>${cantidad}</strong></p>
+      <p>Total a pagar: <strong>${total}€</strong></p>
+      <p>Nos pondremos en contacto contigo pronto para confirmar.</p>
+    `;
+
+    pedidoForm.reset();
+  });
+
+  // Botón de reseñas
+  const btnResenas = document.getElementById('btnReseñas');
+  btnResenas.addEventListener('click', () => {
+    // Enlace a Google Maps para reseñas
+    const url = 'https://www.google.com/maps/place/Calle+Valpara%C3%ADso,+Palma/reviews';
+    window.open(url, '_blank');
+  });
+
+  // Mostrar inicio al cargar la página
+  window.addEventListener('DOMContentLoaded', () => {
+    navButtons.forEach(btn => btn.classList.remove('active'));
+    sections.forEach(sec => sec.classList.remove('active'));
+
+    document.querySelector('nav button[data-section="inicio"]').classList.add('active');
+    document.getElementById('inicio').classList.add('active');
+  });
+</script>
+
+</body>
+</html>
